@@ -1,0 +1,70 @@
+create database Ex3;
+
+use Ex3;
+
+create table clientes (
+cod_cliente int auto_increment primary key not null,
+nome_cliente varchar(100) not null,
+cpf_cliente varchar(14) not null,
+estado char(2) default 'SP',
+celular varchar(19) not null
+);
+
+create table produtos(
+cod_produto int auto_increment primary key not null,
+nome_produto varchar(100) not null,
+quantidade int ,
+valor decimal,
+descricao varchar (100)
+);
+
+create table fornecedores(
+cod_fornecedor int auto_increment primary key not null,
+nome_fornecedor varchar(100) not null,
+endereco varchar (100) not null,
+cnpj varchar (14) not null,
+celular varchar(19) not null
+);
+
+create table TEM(
+cod_tem int auto_increment primary key not null,
+cod_fornecedor int, cod_produto int,
+foreign key (cod_produto) references produtos (cod_produto),
+foreign key (cod_fornecedor) references fornecedores (cod_fornecedor)
+);
+
+drop table clientes; 
+
+drop table Ex3;
+
+alter table clientes
+add sexo char(1);
+
+alter table clientes
+drop column sexo;
+
+alter table clientes
+rename to pessoa_fisica;
+
+alter table pessoa_fisica
+change cpf_cliente CPFP varchar(18);
+
+select * from pessoa_fisica;
+
+
+-- ATIVIDADE 
+
+-- 1)
+alter table pessoa_fisica 
+add cidade varchar(100);
+
+-- 2)
+alter table produtos
+modify  valor decimal (7,2);
+
+-- 3)
+alter table fornecedores
+add cidade varchar (100), add estado char(2) default 'SP';
+
+select * from pessoa_fisica
+
