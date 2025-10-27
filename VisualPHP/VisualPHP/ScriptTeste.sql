@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS TestePHP;
+USE TestePHP;
+
+-- 2) Cria a tabela de usuários
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE
+);
+
