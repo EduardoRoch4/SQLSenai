@@ -3,23 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário</title>
+    <title>Cadastro de Aluno</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        nav {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #5a6268;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        form label {
+            display: block;
+            margin-top: 12px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        form input:focus {
+            border-color: #a3bffa;
+            outline: none;
+            box-shadow: 0 0 5px rgba(163, 191, 250, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #449d48;
+        }
+
+    </style>
 </head>
 <body>
-    <form action="insert.php" method="POST">
-        <label>Nome: </label>
-        <input type="text" name="nome" required><br><br>
+    <div class="container">
+        <!-- Navegação -->
+        <nav>
+            <a href="listar.php">Listar Alunos</a>
 
-        <label>Data Nascimento: </label>
-        <input type="date" name="data_nasc" required><br><br>
+        </nav>
 
-        <label>CPF:</label>
-        <input type = "int" name = "CPF" required><br><br>
+        <h2>Cadastro de Aluno</h2>
 
-        <label>Endereço:</label>
-        <input type="text" name="endereço" required><br><br>
+        <!-- Formulário -->
+        <form action="insert.php" method="POST">
+            <label>Nome:</label>
+            <input type="text" name="nome" required>
 
-        <button type="submit">Enviar</button>
-    </form>
+            <label>Data de Nascimento:</label>
+            <input type="date" name="data_nasc" required>
+
+            <label>CPF:</label>
+            <input type="text" name="CPF" required>
+
+            <label>Endereço:</label>
+            <input type="text" name="endereco" required>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
 </body>
 </html>
