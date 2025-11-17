@@ -5,16 +5,16 @@ if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-// Buscar todos os clientes
-$result = $conn->query("SELECT * FROM clientes ORDER BY nome");
+$result = $conn->query("SELECT * FROM veiculo");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+        <link rel="stylesheet" href="../style.css">
+
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Clientes</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Lista de Veiculos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -65,15 +65,9 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
             text-decoration: none;
             color: #fff;
             background-color: #28a745;
-            padding: 5px 20px;
+            padding: 5px 10px;
             border-radius: 5px;
             margin-right: 5px;
-            display: inline-block;
-            margin-bottom: 10px; 
-        }
-
-        .btnExcluir {
-            background-color: #dc3545;
         }
 
         .menu-btn {
@@ -95,36 +89,28 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
 </head>
 <body>
     <div class="container">
-        <h2>Lista de Clientes</h2>
+        <h2>Lista de veículos</h2>
         <table>
             <tr>
                 <th>ID</th>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Ações</th>
+                <th>Ano</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Placa</th>
             </tr>
+
             <?php while ($row = $result->fetch_assoc()) { ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($row['id_cliente']); ?></td>
-                    <td><?php echo htmlspecialchars($row['nome']); ?></td>
-                    <td><?php echo htmlspecialchars($row['cpf']); ?></td>
-                    <td><?php echo htmlspecialchars($row['telefone']); ?></td>
-                    <td><?php echo htmlspecialchars($row['endereco']); ?></td>
-                    <td>
-                        <?php $clienteId = isset($row['id_cliente']) ? intval($row['id_cliente']) : ''; ?>
-                        <a class="btn" href="editarClientes.php?id_cliente=<?php echo $clienteId; ?>">Editar</a>
-                        <a class="btnExcluir" href="excluirClientes.php?id_cliente=<?php echo $clienteId; ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">Excluir</a>
-                    </td>
+                    <td><?php echo $row['id_veiculo']; ?></td>
+                    <td><?php echo $row['ano']; ?></td>
+                    <td><?php echo $row['marca']; ?></td>
+                    <td><?php echo $row['modelo']; ?></td>
+                    <td><?php echo $row['placa']; ?></td>
                 </tr>
             <?php } ?>
         </table>
 
         <a class="menu-btn" href="../index.html">Voltar ao Menu Principal</a>
-        <a class="menu-btn" href="FormClientes.php">Cadastrar Cliente</a>
     </div>
 </body>
 </html>
-
-<?php $conn->close(); ?>

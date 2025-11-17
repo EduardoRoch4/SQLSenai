@@ -2,7 +2,7 @@
 $msg = '';
 $msgClass = '';
 
-$coon = new mysqli("localhost", "root", "senaisp", "oficina");
+$coon = new mysqli("localhost", "root", "senaisp", "mecanica");
 if ($coon->connect_error) {
     $msg = 'Erro de conexão: ' . $coon->connect_error;
     $msgClass = 'error';

@@ -1,27 +1,31 @@
 <?php
+$nome = $_POST['nome'];
+$cpf = $_POST['cpf'];
+$especialidade = $_POST['especialidade'];
+
 $coon = new mysqli("localhost", "root", "senaisp", "mecanica");
 
 if ($coon->connect_error) {
-    die("Erro: " . $coon->connect_error);
+  die("Erro de conexão: " . $coon->connect_error);
 }
 
-$id = $_POST['id_cliente'];
-$nome = $_POST['nome'];
-$cpf = $_POST['cpf'];
-$endereco = $_POST['endereco'];
-$telefone = $_POST['telefone'];
+$stmt = $coon->prepare("INSERT INTO mecanico (nome, cpf, especialidade) VALUES (?, ?, ?)");
+$stmt->bind_param("sss", $nome, $cpf, $especialidade);
 
-$stmt = $coon->prepare("UPDATE clientes SET nome=?, cpf=?, endereco=?, telefone=? WHERE id_cliente=?");
-$stmt->bind_param("ssssi", $nome, $cpf, $endereco, $telefone, $id);
+// Executa só uma vez e salva o resultado
+$resultado = $stmt->execute();
 
+$stmt->close();
+$coon->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-        <link rel="stylesheet" href="../style.css">
+      <link rel="stylesheet" href="../style.css">
 
 <head>
     <meta charset="UTF-8">
-    <title>Atualização de Clientes</title>
+    <title>Cadastro de Mecanico</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,20 +68,15 @@ $stmt->bind_param("ssssi", $nome, $cpf, $endereco, $telefone, $id);
 <body>
     <div class="message-box">
         <?php
-        if ($stmt->execute()) {
-            echo "<h2>Dados do cliente atualizados com sucesso!</h2>";
+        if ($resultado) {
+            echo "<h2>Mecanico cadastrado com sucesso!</h2>";
         } else {
-            echo "<h2 class='error'>Erro ao atualizar: " . $stmt->error . "</h2>";
+            echo "<h2 class='error'>Erro ao cadastrar!</h2>";
         }
         ?>
-        <a href="listarClientes.php">Voltar para Lista de Clientes</a>
+        <a href="listarMecanicos.php">Voltar para Lista de Mecanicos</a>
         <br><br>
         <a href="../index.html">Menu Principal</a>
     </div>
 </body>
 </html>
-
-<?php
-$stmt->close();
-$coon->close();
-?>

@@ -1,7 +1,7 @@
 -- Criar Banco de dados
-create database escola;  
+create database mecanica;  
 -- Ativar Banco
-use escola; 
+use mecanica; 
 
 -- Criar Tablelas 
 create table aluno (

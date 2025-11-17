@@ -1,6 +1,6 @@
 <?php
 // Conexão com o banco de dados
-$coon = new mysqli("localhost", "root", "senaisp", "escola");
+$coon = new mysqli("localhost", "root", "senaisp", "mecanica");
 
 // Verifica conexão
 if ($coon->connect_error) {

@@ -6,7 +6,7 @@ $CPF = $_POST['CPF'];
 $endereço = $_POST['endereço'];
 
 // Conexão com o banco de dados (MySQLi)
-$coon = new mysqli("localhost", "root", "senaisp", "escola");
+$coon = new mysqli("localhost", "root", "senaisp", "mecanica");
 
 // Verifica se houve erro na conexão
 if ($coon->connect_error) {

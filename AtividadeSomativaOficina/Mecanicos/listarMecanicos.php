@@ -5,17 +5,25 @@ if ($conn->connect_error) {
     die("Erro de conexão: " . $conn->connect_error);
 }
 
-// Buscar todos os clientes
-$result = $conn->query("SELECT * FROM clientes ORDER BY nome");
+$result = $conn->query("SELECT * FROM mecanico");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+<link rel="stylesheet" href="../style.css">
+
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Clientes</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>Lista de Mecanicos</title>
     <style>
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            /* Um em cima do outro */
+            gap: 6px;
+            /* Espaço entre eles */
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -32,7 +40,7 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
             background-color: #fff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -46,7 +54,8 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
             width: 100%;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -65,15 +74,10 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
             text-decoration: none;
             color: #fff;
             background-color: #28a745;
-            padding: 5px 20px;
+            padding: 6px 10px;
             border-radius: 5px;
-            margin-right: 5px;
-            display: inline-block;
-            margin-bottom: 10px; 
-        }
-
-        .btnExcluir {
-            background-color: #dc3545;
+            text-align: center;
+            font-weight: bold;
         }
 
         .menu-btn {
@@ -93,38 +97,50 @@ $result = $conn->query("SELECT * FROM clientes ORDER BY nome");
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h2>Lista de Clientes</h2>
+        <h2>Lista de Mecanicos</h2>
         <table>
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>CPF</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
+                <th>Especialidade</th>
                 <th>Ações</th>
             </tr>
-            <?php while ($row = $result->fetch_assoc()) { ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($row['id_cliente']); ?></td>
-                    <td><?php echo htmlspecialchars($row['nome']); ?></td>
-                    <td><?php echo htmlspecialchars($row['cpf']); ?></td>
-                    <td><?php echo htmlspecialchars($row['telefone']); ?></td>
-                    <td><?php echo htmlspecialchars($row['endereco']); ?></td>
-                    <td>
-                        <?php $clienteId = isset($row['id_cliente']) ? intval($row['id_cliente']) : ''; ?>
-                        <a class="btn" href="editarClientes.php?id_cliente=<?php echo $clienteId; ?>">Editar</a>
-                        <a class="btnExcluir" href="excluirClientes.php?id_cliente=<?php echo $clienteId; ?>" onclick="return confirm('Tem certeza que deseja excluir este cliente?');">Excluir</a>
-                    </td>
-                </tr>
-            <?php } ?>
+
+            <?php
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    // aceitar tanto 'id' quanto 'id_mecanico' dependendo de como a tabela foi criada
+                    $idVal = isset($row['id']) ? $row['id'] : (isset($row['id_mecanico']) ? $row['id_mecanico'] : '');
+                    ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($idVal); ?></td>
+                        <td><?php echo htmlspecialchars($row['nome'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($row['cpf'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($row['especialidade'] ?? ''); ?></td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <a class="btn" href="editarMecanicos.php?id=<?php echo urlencode($idVal); ?>">Editar</a>
+                                <a class="btnExcluir" href="ExcluirMecanicos.php?id=<?php echo urlencode($idVal); ?>">Excluir</a>
+                            </div>
+                        </td>
+
+                    </tr>
+                <?php
+                }
+            } else {
+                echo '<tr><td colspan="6" style="text-align:center;">Nenhum funcionário encontrado.</td></tr>';
+            }
+            ?>
         </table>
 
         <a class="menu-btn" href="../index.html">Voltar ao Menu Principal</a>
-        <a class="menu-btn" href="FormClientes.php">Cadastrar Cliente</a>
+        <a class="menu-btn" href="formMecanicos.html">Cadastrar Mecanicos</a>
     </div>
 </body>
-</html>
 
-<?php $conn->close(); ?>
+</html>
